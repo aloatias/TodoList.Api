@@ -59,7 +59,7 @@ namespace TodoList.Api.Controllers
                 switch (getAllTasksResult.Status)
                 {
                     case StatusEnum.Ok:
-                        return Ok();
+                        return Ok(getAllTasksResult.Tasks);
                     default:
                         return StatusCode(500);
                 }
