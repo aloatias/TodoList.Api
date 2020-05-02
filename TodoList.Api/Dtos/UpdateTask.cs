@@ -2,7 +2,7 @@
 
 namespace TodoList.Api.Dtos
 {
-    public class UpdateTaskStatus
+    public class UpdateTask
     {
         public Guid TaskId { get; set; }
     }

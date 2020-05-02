@@ -96,7 +96,7 @@ namespace TodoList.Api.Controllers
 
         [HttpPut]
         [Route("UpdateStatus")]
-        public async Task<IActionResult> UpdateTaskStatus([FromBody]UpdateTaskStatus task)
+        public async Task<IActionResult> UpdateTaskStatus([FromBody]UpdateTask task)
         {
             try
             {
