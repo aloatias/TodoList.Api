@@ -139,7 +139,7 @@ namespace TodoList.Api.Services
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex.Message, ex.InnerException, $"Class={ nameof(TaskService) }", $"Method={ nameof(AddTaskAsync) }");
+                _logger.LogError(ex.Message, ex.InnerException, $"Class={ nameof(TaskService) }", $"Method={ nameof(UpdateTaskStatusAsync) }");
                 return new UpdateTaskStatusResult(StatusEnum.InternalError);
             }
         }

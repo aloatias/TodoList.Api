@@ -113,7 +113,7 @@ namespace TodoList.Api.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex.Message, ex.InnerException, $"Class={ nameof(TaskController) }", $"Method={ nameof(GetAllTasksAsync) }");
+                _logger.LogError(ex.Message, ex.InnerException, $"Class={ nameof(TaskController) }", $"Method={ nameof(UpdateTaskStatusAsync) }");
                 throw;
             }
         }
