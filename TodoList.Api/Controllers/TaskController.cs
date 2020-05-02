@@ -28,7 +28,7 @@ namespace TodoList.Api.Controllers
         {
             try
             {
-                var addResult = await _taskService.AddTaskAsync(task.TaskDescription.ToString());
+                var addResult = await _taskService.AddTaskAsync(task.TaskDescription);
                 switch (addResult.Status)
                 {
                     case StatusEnum.Ok:
