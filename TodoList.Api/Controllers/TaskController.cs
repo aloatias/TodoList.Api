@@ -93,5 +93,29 @@ namespace TodoList.Api.Controllers
                 throw;
             }
         }
+
+        [HttpPut]
+        [Route("UpdateStatus")]
+        public async Task<IActionResult> UpdateTaskStatus([FromBody]UpdateTaskStatus task)
+        {
+            try
+            {
+                var setTaskToDoneResult = await _taskService.UpdateTaskStatus(task.TaskId);
+                switch (setTaskToDoneResult.Status)
+                {
+                    case StatusEnum.Ok:
+                        return Ok(setTaskToDoneResult.Task);
+                    case StatusEnum.NotFound:
+                        return StatusCode(204, setTaskToDoneResult.Error.ErrorMessage);
+                    default:
+                        return StatusCode(500);
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex.InnerException, $"Class={ nameof(TaskController) }", $"Method={ nameof(GetAllTasksAsync) }");
+                throw;
+            }
+        }
     }
 }

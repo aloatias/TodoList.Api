@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using TodoList.Api.DataAccess;
 using TodoList.Api.Dtos;
@@ -29,7 +30,7 @@ namespace TodoList.Api.Services
                 if (string.IsNullOrWhiteSpace(taskDescription))
                 {
                     return new AddTaskResult(
-                        new NullArgumentException("The task description can't be empty"),
+                        new InvalidParameterException("The task description can't be empty"),
                         StatusEnum.InvalidParamater
                     );
                 }
@@ -43,7 +44,12 @@ namespace TodoList.Api.Services
                     );
                 }
 
-                var task = new TodoTask { Description = taskDescription };
+                var task = new TodoTask
+                {
+                    Description = taskDescription,
+                    CreationDate = DateTime.UtcNow,
+                    Done = false
+                };
 
                 var createdTask = await _todoListContext.AddAsync(task);
                 await _todoListContext.SaveChangesAsync();
@@ -64,7 +70,10 @@ namespace TodoList.Api.Services
         {
             try
             {
-                return new GetAllTasksResult(await _todoListContext.TodoTask.ToListAsync(), StatusEnum.Ok);
+                return new GetAllTasksResult(
+                    await _todoListContext.TodoTask.OrderByDescending(t => t.CreationDate).ToListAsync(),
+                    StatusEnum.Ok
+                );
             }
             catch (Exception ex)
             {
@@ -96,6 +105,42 @@ namespace TodoList.Api.Services
             {
                 _logger.LogError(ex.Message, ex.InnerException, $"Class={ nameof(TaskService) }", $"Method={ nameof(RemoveTaskAsync) }");
                 return new RemoveTaskResult(StatusEnum.InternalError);
+            }
+        }
+
+        public async Task<UpdateTaskStatusResult> UpdateTaskStatus(Guid taskId)
+        {
+            try
+            {
+                var task = await _todoListContext.TodoTask.FirstOrDefaultAsync(t => t.Id == taskId);
+                if (task == null)
+                {
+                    return new UpdateTaskStatusResult(
+                        new NotFoundException($"The task Id: \"{ taskId }\" doesn't exist"),
+                        StatusEnum.NotFound
+                    );
+                }
+
+                if (task.Done)
+                {
+                    task.Done = false;
+                }
+                else
+                {
+                    task.Done = true;
+                }
+                
+                await _todoListContext.SaveChangesAsync();
+
+                return new UpdateTaskStatusResult(
+                    task,
+                    StatusEnum.Ok
+                );
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex.InnerException, $"Class={ nameof(TaskService) }", $"Method={ nameof(AddTaskAsync) }");
+                return new UpdateTaskStatusResult(StatusEnum.InternalError);
             }
         }
     }
