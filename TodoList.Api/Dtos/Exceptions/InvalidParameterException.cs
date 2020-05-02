@@ -2,9 +2,9 @@
 
 namespace TodoList.Api.Services
 {
-    public class NullArgumentException : Error
+    public class InvalidParameterException : Error
     {
-        public NullArgumentException(string errorMessage)
+        public InvalidParameterException(string errorMessage)
         {
             ErrorMessage = errorMessage;
         }
