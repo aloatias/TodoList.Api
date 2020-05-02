@@ -55,7 +55,6 @@ namespace TodoList.Api.Controllers
             try
             {
                 var getAllTasksResult = await _taskService.GetAllTasksAsync();
-
                 switch (getAllTasksResult.Status)
                 {
                     case StatusEnum.Ok:
