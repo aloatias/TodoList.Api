@@ -108,7 +108,7 @@ namespace TodoList.Api.Services
             }
         }
 
-        public async Task<UpdateTaskStatusResult> UpdateTaskStatus(Guid taskId)
+        public async Task<UpdateTaskStatusResult> UpdateTaskStatusAsync(Guid taskId)
         {
             try
             {

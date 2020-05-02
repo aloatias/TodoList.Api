@@ -12,6 +12,6 @@ namespace TodoList.Api.Interfaces
 
         Task<DeleteTaskResult> DeleteTaskAsync(Guid taskId);
 
-        Task<UpdateTaskStatusResult> UpdateTaskStatus(Guid taskId);
+        Task<UpdateTaskStatusResult> UpdateTaskStatusAsync(Guid taskId);
     }
 }

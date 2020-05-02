@@ -96,11 +96,11 @@ namespace TodoList.Api.Controllers
 
         [HttpPut]
         [Route("UpdateStatus")]
-        public async Task<IActionResult> UpdateTaskStatus([FromBody]UpdateTask task)
+        public async Task<IActionResult> UpdateTaskStatusAsync([FromBody]UpdateTask task)
         {
             try
             {
-                var setTaskToDoneResult = await _taskService.UpdateTaskStatus(task.TaskId);
+                var setTaskToDoneResult = await _taskService.UpdateTaskStatusAsync(task.TaskId);
                 switch (setTaskToDoneResult.Status)
                 {
                     case StatusEnum.Ok:
