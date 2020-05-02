@@ -10,7 +10,7 @@ namespace TodoList.Api.Interfaces
 
         Task<GetAllTasksResult> GetAllTasksAsync();
 
-        Task<RemoveTaskResult> RemoveTaskAsync(Guid taskId);
+        Task<RemoveTaskResult> DeleteTaskAsync(Guid taskId);
 
         Task<UpdateTaskStatusResult> UpdateTaskStatus(Guid taskId);
     }

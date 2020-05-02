@@ -70,26 +70,26 @@ namespace TodoList.Api.Controllers
             }
         }
 
-        [HttpDelete]
-        [Route("Remove")]
-        public async Task<IActionResult> RemoveTaskAsync(Guid taskId)
+        [HttpDelete("taskId")]
+        [Route("Delete")]
+        public async Task<IActionResult> DeleteTaskAsync(Guid taskId)
         {
             try
             {
-                var removeResult = await _taskService.RemoveTaskAsync(taskId);
-                switch (removeResult.Status)
+                var deleteResult = await _taskService.DeleteTaskAsync(taskId);
+                switch (deleteResult.Status)
                 {
                     case StatusEnum.Ok:
                         return Ok();
                     case StatusEnum.NotFound:
-                        return StatusCode(204, removeResult.Error.ErrorMessage);
+                        return StatusCode(204, deleteResult.Error.ErrorMessage);
                     default:
                         return StatusCode(500);
                 }
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex.Message, ex.InnerException, $"Class={ nameof(TaskController) }", $"Method={ nameof(RemoveTaskAsync) }");
+                _logger.LogError(ex.Message, ex.InnerException, $"Class={ nameof(TaskController) }", $"Method={ nameof(DeleteTaskAsync) }");
                 throw;
             }
         }

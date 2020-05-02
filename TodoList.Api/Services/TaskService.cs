@@ -71,7 +71,7 @@ namespace TodoList.Api.Services
             try
             {
                 return new GetAllTasksResult(
-                    await _todoListContext.TodoTask.OrderByDescending(t => t.CreationDate).ToListAsync(),
+                    await _todoListContext.TodoTask.OrderBy(t => t.CreationDate).ToListAsync(),
                     StatusEnum.Ok
                 );
             }
@@ -82,7 +82,7 @@ namespace TodoList.Api.Services
             }
         }
 
-        public async Task<RemoveTaskResult> RemoveTaskAsync(Guid taskId)
+        public async Task<RemoveTaskResult> DeleteTaskAsync(Guid taskId)
         {
             try
             {
@@ -92,7 +92,7 @@ namespace TodoList.Api.Services
                 {
                     return new RemoveTaskResult(
                         new NotFoundException($"The task Id:\"{ taskId }\" was not found"),
-                        StatusEnum.Duplicated
+                        StatusEnum.NotFound
                     );
                 }
 
@@ -103,7 +103,7 @@ namespace TodoList.Api.Services
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex.Message, ex.InnerException, $"Class={ nameof(TaskService) }", $"Method={ nameof(RemoveTaskAsync) }");
+                _logger.LogError(ex.Message, ex.InnerException, $"Class={ nameof(TaskService) }", $"Method={ nameof(DeleteTaskAsync) }");
                 return new RemoveTaskResult(StatusEnum.InternalError);
             }
         }
