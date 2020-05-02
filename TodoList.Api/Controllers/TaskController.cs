@@ -24,11 +24,11 @@ namespace TodoList.Api.Controllers
 
         [HttpPost]
         [Route("Add")]
-        public async Task<IActionResult> AddTaskAsync(string taskDescription)
+        public async Task<IActionResult> AddTaskAsync([FromBody]AddTask task)
         {
             try
             {
-                var addResult = await _taskService.AddTaskAsync(taskDescription);
+                var addResult = await _taskService.AddTaskAsync(task.TaskDescription.ToString());
                 switch (addResult.Status)
                 {
                     case StatusEnum.Ok:
