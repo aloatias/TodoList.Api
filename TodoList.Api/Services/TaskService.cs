@@ -82,7 +82,7 @@ namespace TodoList.Api.Services
             }
         }
 
-        public async Task<RemoveTaskResult> DeleteTaskAsync(Guid taskId)
+        public async Task<DeleteTaskResult> DeleteTaskAsync(Guid taskId)
         {
             try
             {
@@ -90,7 +90,7 @@ namespace TodoList.Api.Services
 
                 if (task == null)
                 {
-                    return new RemoveTaskResult(
+                    return new DeleteTaskResult(
                         new NotFoundException($"The task Id:\"{ taskId }\" was not found"),
                         StatusEnum.NotFound
                     );
@@ -99,12 +99,12 @@ namespace TodoList.Api.Services
                 _todoListContext.Remove(task);
                 await _todoListContext.SaveChangesAsync();
 
-                return new RemoveTaskResult(StatusEnum.Ok);
+                return new DeleteTaskResult(StatusEnum.Ok);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message, ex.InnerException, $"Class={ nameof(TaskService) }", $"Method={ nameof(DeleteTaskAsync) }");
-                return new RemoveTaskResult(StatusEnum.InternalError);
+                return new DeleteTaskResult(StatusEnum.InternalError);
             }
         }
 

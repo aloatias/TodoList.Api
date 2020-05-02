@@ -74,7 +74,7 @@ namespace TodoList.Integration.Tests
             // Prepare
             string taskDescription = "My new Task";
 
-            var expectedResult = new RemoveTaskResult
+            var expectedResult = new DeleteTaskResult
             (
                 StatusEnum.Ok
             );
