@@ -69,20 +69,20 @@ namespace TodoList.Integration.Tests
         }
 
         [Fact]
-        public async void Should_RemoveTaskById()
+        public async void Should_DeleteTaskById()
         {
             // Prepare
             string taskDescription = "My new Task";
 
-            var expectedResult = new RemoveTaskResult
+            var expectedResult = new DeleteTaskResult
             (
                 StatusEnum.Ok
             );
 
             // Act
-            var addTaskResult = await _taskService.AddTaskAsync(taskDescription);
+            var deleteTaskResult = await _taskService.AddTaskAsync(taskDescription);
 
-            var actualResult = await _taskService.RemoveTaskAsync(addTaskResult.Task.Id);
+            var actualResult = await _taskService.DeleteTaskAsync(deleteTaskResult.Task.Id);
 
             // Test
             Check.That(actualResult.Status).IsEqualTo(expectedResult.Status);

@@ -24,11 +24,11 @@ namespace TodoList.Api.Controllers
 
         [HttpPost]
         [Route("Add")]
-        public async Task<IActionResult> AddTaskAsync(string taskDescription)
+        public async Task<IActionResult> AddTaskAsync([FromBody]AddTask task)
         {
             try
             {
-                var addResult = await _taskService.AddTaskAsync(taskDescription);
+                var addResult = await _taskService.AddTaskAsync(task.TaskDescription);
                 switch (addResult.Status)
                 {
                     case StatusEnum.Ok:
@@ -55,7 +55,6 @@ namespace TodoList.Api.Controllers
             try
             {
                 var getAllTasksResult = await _taskService.GetAllTasksAsync();
-
                 switch (getAllTasksResult.Status)
                 {
                     case StatusEnum.Ok:
@@ -71,26 +70,50 @@ namespace TodoList.Api.Controllers
             }
         }
 
-        [HttpDelete]
-        [Route("Remove")]
-        public async Task<IActionResult> RemoveTaskAsync(Guid taskId)
+        [HttpDelete("taskId")]
+        [Route("Delete")]
+        public async Task<IActionResult> DeleteTaskAsync(Guid taskId)
         {
             try
             {
-                var removeResult = await _taskService.RemoveTaskAsync(taskId);
-                switch (removeResult.Status)
+                var deleteResult = await _taskService.DeleteTaskAsync(taskId);
+                switch (deleteResult.Status)
                 {
                     case StatusEnum.Ok:
                         return Ok();
                     case StatusEnum.NotFound:
-                        return StatusCode(204, removeResult.Error.ErrorMessage);
+                        return StatusCode(204, deleteResult.Error.ErrorMessage);
                     default:
                         return StatusCode(500);
                 }
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex.Message, ex.InnerException, $"Class={ nameof(TaskController) }", $"Method={ nameof(RemoveTaskAsync) }");
+                _logger.LogError(ex.Message, ex.InnerException, $"Class={ nameof(TaskController) }", $"Method={ nameof(DeleteTaskAsync) }");
+                throw;
+            }
+        }
+
+        [HttpPut]
+        [Route("UpdateStatus")]
+        public async Task<IActionResult> UpdateTaskStatusAsync([FromBody]UpdateTask task)
+        {
+            try
+            {
+                var setTaskToDoneResult = await _taskService.UpdateTaskStatusAsync(task.TaskId);
+                switch (setTaskToDoneResult.Status)
+                {
+                    case StatusEnum.Ok:
+                        return Ok(setTaskToDoneResult.Task);
+                    case StatusEnum.NotFound:
+                        return StatusCode(204, setTaskToDoneResult.Error.ErrorMessage);
+                    default:
+                        return StatusCode(500);
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex.InnerException, $"Class={ nameof(TaskController) }", $"Method={ nameof(UpdateTaskStatusAsync) }");
                 throw;
             }
         }
