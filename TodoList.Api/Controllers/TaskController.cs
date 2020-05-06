@@ -24,11 +24,11 @@ namespace TodoList.Api.Controllers
 
         [HttpPost]
         [Route("Add")]
-        public async Task<IActionResult> AddTaskAsync([FromBody]AddTask task)
+        public async Task<IActionResult> AddTaskAsync([FromBody]TaskDescription task)
         {
             try
             {
-                var addResult = await _taskService.AddTaskAsync(task.TaskDescription);
+                var addResult = await _taskService.AddTaskAsync(task.Description);
                 switch (addResult.Status)
                 {
                     case StatusEnum.Ok:
@@ -96,11 +96,11 @@ namespace TodoList.Api.Controllers
 
         [HttpPut]
         [Route("UpdateStatus")]
-        public async Task<IActionResult> UpdateTaskStatusAsync([FromBody]UpdateTask task)
+        public async Task<IActionResult> UpdateTaskStatusAsync([FromBody]TaskId task)
         {
             try
             {
-                var setTaskToDoneResult = await _taskService.UpdateTaskStatusAsync(task.TaskId);
+                var setTaskToDoneResult = await _taskService.UpdateTaskStatusAsync(task.Id);
                 switch (setTaskToDoneResult.Status)
                 {
                     case StatusEnum.Ok:
