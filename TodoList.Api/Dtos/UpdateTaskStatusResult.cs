@@ -7,10 +7,6 @@ namespace TodoList.Api.Dtos
     {
         public TodoTask Task { get; private set; }
 
-        public UpdateTaskStatusResult(StatusEnum status) : base(status)
-        {
-        }
-
         public UpdateTaskStatusResult(TodoTask task, StatusEnum status) : base(status)
         {
             Task = task;

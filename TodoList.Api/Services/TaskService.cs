@@ -62,7 +62,7 @@ namespace TodoList.Api.Services
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message, ex.InnerException, $"Class={ nameof(TaskService) }", $"Method={ nameof(AddTaskAsync) }");
-                return new AddTaskResult(StatusEnum.InternalError);
+                return new AddTaskResult(new InternalServerException(ex.Message), StatusEnum.InternalError);
             }
         }
 
@@ -78,7 +78,7 @@ namespace TodoList.Api.Services
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message, ex.InnerException, $"Class={ nameof(TaskService) }", $"Method={ nameof(GetAllTasksAsync) }");
-                return new GetAllTasksResult(StatusEnum.InternalError);
+                return new GetAllTasksResult(new InternalServerException(ex.Message), StatusEnum.InternalError);
             }
         }
 
@@ -104,7 +104,7 @@ namespace TodoList.Api.Services
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message, ex.InnerException, $"Class={ nameof(TaskService) }", $"Method={ nameof(DeleteTaskAsync) }");
-                return new DeleteTaskResult(StatusEnum.InternalError);
+                return new DeleteTaskResult(new InternalServerException(ex.Message), StatusEnum.InternalError);
             }
         }
 
@@ -140,7 +140,7 @@ namespace TodoList.Api.Services
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message, ex.InnerException, $"Class={ nameof(TaskService) }", $"Method={ nameof(UpdateTaskStatusAsync) }");
-                return new UpdateTaskStatusResult(StatusEnum.InternalError);
+                return new UpdateTaskStatusResult(new InternalServerException(ex.Message), StatusEnum.InternalError);
             }
         }
     }
