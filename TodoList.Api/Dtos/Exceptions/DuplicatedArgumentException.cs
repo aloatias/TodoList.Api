@@ -1,10 +1,9 @@
 ﻿namespace TodoList.Api.Dtos.Exceptions
 {
-    public class DuplicatedArgumentException : Error
+    public class DuplicatedArgumentException : ErrorBase
     {
-        public DuplicatedArgumentException(string errorMessage)
+        public DuplicatedArgumentException(string errorMessage) : base(errorMessage)
         {
-            ErrorMessage = errorMessage;
         }
     }
 }

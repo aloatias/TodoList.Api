@@ -16,7 +16,7 @@ namespace TodoList.Api.Dtos
             Task = task;
         }
 
-        public UpdateTaskStatusResult(Error error, StatusEnum status) : base(error, status)
+        public UpdateTaskStatusResult(ErrorBase error, StatusEnum status) : base(error, status)
         {
         }
     }

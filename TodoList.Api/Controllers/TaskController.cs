@@ -77,15 +77,12 @@ namespace TodoList.Api.Controllers
             try
             {
                 var deleteResult = await _taskService.DeleteTaskAsync(taskId);
-                switch (deleteResult.Status)
+                return deleteResult.Status switch
                 {
-                    case StatusEnum.Ok:
-                        return Ok();
-                    case StatusEnum.NotFound:
-                        return StatusCode(204, deleteResult.Error.ErrorMessage);
-                    default:
-                        return StatusCode(500);
-                }
+                    StatusEnum.Ok => Ok(),
+                    StatusEnum.NotFound => StatusCode(204, deleteResult.Error.ErrorMessage),
+                    _ => StatusCode(500),
+                };
             }
             catch (Exception ex)
             {
