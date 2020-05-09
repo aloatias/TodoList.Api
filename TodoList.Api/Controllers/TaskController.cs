@@ -24,11 +24,11 @@ namespace TodoList.Api.Controllers
 
         [HttpPost]
         [Route("Add")]
-        public async Task<IActionResult> AddTaskAsync([FromBody]AddTask task)
+        public async Task<IActionResult> AddTaskAsync([FromBody]TaskDescription task)
         {
             try
             {
-                var addResult = await _taskService.AddTaskAsync(task.TaskDescription);
+                var addResult = await _taskService.AddTaskAsync(task.Description);
                 switch (addResult.Status)
                 {
                     case StatusEnum.Ok:
@@ -77,15 +77,12 @@ namespace TodoList.Api.Controllers
             try
             {
                 var deleteResult = await _taskService.DeleteTaskAsync(taskId);
-                switch (deleteResult.Status)
+                return deleteResult.Status switch
                 {
-                    case StatusEnum.Ok:
-                        return Ok();
-                    case StatusEnum.NotFound:
-                        return StatusCode(204, deleteResult.Error.ErrorMessage);
-                    default:
-                        return StatusCode(500);
-                }
+                    StatusEnum.Ok => Ok(),
+                    StatusEnum.NotFound => StatusCode(204, deleteResult.Error.ErrorMessage),
+                    _ => StatusCode(500),
+                };
             }
             catch (Exception ex)
             {
@@ -96,11 +93,11 @@ namespace TodoList.Api.Controllers
 
         [HttpPut]
         [Route("UpdateStatus")]
-        public async Task<IActionResult> UpdateTaskStatusAsync([FromBody]UpdateTask task)
+        public async Task<IActionResult> UpdateTaskStatusAsync([FromBody]TaskId task)
         {
             try
             {
-                var setTaskToDoneResult = await _taskService.UpdateTaskStatusAsync(task.TaskId);
+                var setTaskToDoneResult = await _taskService.UpdateTaskStatusAsync(task.Id);
                 switch (setTaskToDoneResult.Status)
                 {
                     case StatusEnum.Ok:

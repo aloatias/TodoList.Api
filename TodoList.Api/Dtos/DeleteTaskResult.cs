@@ -8,7 +8,7 @@ namespace TodoList.Api.Dtos
         {
         }
 
-        public DeleteTaskResult(Error error, StatusEnum status) : base(error, status)
+        public DeleteTaskResult(ErrorBase error, StatusEnum status) : base(error, status)
         {
         }
     }

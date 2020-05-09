@@ -6,14 +6,14 @@ namespace TodoList.Api.Dtos
     {
         public StatusEnum Status { get; private set; }
 
-        public Error Error { get; private set; }
+        public ErrorBase Error { get; private set; }
 
         protected ResultBase(StatusEnum status)
         {
             Status = status;
         }
 
-        protected ResultBase(Error error, StatusEnum status)
+        protected ResultBase(ErrorBase error, StatusEnum status)
         {
             Error = error;
             Status = status;

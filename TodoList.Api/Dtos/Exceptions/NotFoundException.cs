@@ -1,10 +1,9 @@
 ﻿namespace TodoList.Api.Dtos.Exceptions
 {
-    public class NotFoundException : Error
+    public class NotFoundException : ErrorBase
     {
-        public NotFoundException(string errorMessage)
+        public NotFoundException(string errorMessage) : base(errorMessage)
         {
-            ErrorMessage = errorMessage;
         }
     }
 }

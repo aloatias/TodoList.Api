@@ -2,11 +2,10 @@
 
 namespace TodoList.Api.Services
 {
-    public class InvalidParameterException : Error
+    public class InvalidParameterException : ErrorBase
     {
-        public InvalidParameterException(string errorMessage)
+        public InvalidParameterException(string errorMessage) : base(errorMessage)
         {
-            ErrorMessage = errorMessage;
         }
     }
 }
