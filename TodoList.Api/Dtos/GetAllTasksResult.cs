@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using TodoList.Api.DataAccess;
+using TodoList.Api.Dtos.Exceptions;
 
 namespace TodoList.Api.Dtos
 {
@@ -7,7 +8,7 @@ namespace TodoList.Api.Dtos
     {
         public List<TodoTask> Tasks { get; private set; }
 
-        public GetAllTasksResult(StatusEnum status) : base(status)
+        public GetAllTasksResult(ErrorBase error, StatusEnum status) : base(error, status)
         {
         }
 

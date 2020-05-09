@@ -7,16 +7,12 @@ namespace TodoList.Api.Dtos
     {
         public TodoTask Task { get; private set; }
 
-        public AddTaskResult(StatusEnum status) : base(status)
-        {
-        }
-
-        public AddTaskResult(TodoTask task, StatusEnum status): base(status)
+        public AddTaskResult(TodoTask task, StatusEnum status) : base(status)
         {
             Task = task;
         }
 
-        public AddTaskResult(ErrorBase error, StatusEnum status): base(error, status)
+        public AddTaskResult(ErrorBase error, StatusEnum status) : base(error, status)
         {
         }
     }
